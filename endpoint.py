@@ -20,6 +20,6 @@ lista_filme=[]
 for film in data['results']:
     lista_filme.append(film)
 
-@app.route('/films')
+@app.route('/films',methods=['GET'])
 def films():
     return lista_filme
