@@ -33,10 +33,10 @@ elif cmdType=='deploy':
     args=parser.parse_args()
 
     command=subprocess.run(["docker","container","run","-p","5000:5000","-d","{imageName}:{imageTag}".format(imageName=args.imageName,imageTag=args.imageTag)])
-    print(command)
+    # print(command)
 elif cmdType=='test':
     parser.add_argument('test',type=str)
     parser.add_argument('--endpoint',type=str)
     args=parser.parse_args()
     command=subprocess.run(["curl","-v",args.endpoint])
-    print(command) 
+    # print(command) 
