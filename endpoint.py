@@ -70,19 +70,20 @@ def addFilm():
         newFilmJSON=json.loads(newFilmJSONData)
         newFilmJSON2=json.loads(newFilmJSON)
         lista_filme.append(newFilmJSON2)
+
+        #update the json file
         with open('filme.json','w') as f:
             json.dump(lista_filme,f)
             
         return 'film added'
     elif request.method=='DELETE':
-        id=[x for x in filme if x.imdbid==request.get_json()] # type: ignore
-        for i in filme: # type: ignore
-            if i.imdbid==id:
-                filme.pop(i)  # type: ignore
+        for i in lista_filme:
+            if request.get_json()==i['imdbid']:
+                lista_filme.remove(i)  
+        #update the json
+        with open('filme.json','w') as f:
+            json.dump(lista_filme,f)
+        return "film deleted"
 
-    
-# @app.route('/films/{id}'.format(id=request.get_json()["imdbid"]), methods=["GET"]) #type: ignore
-# def getFilmById():
-#     return [x for x in lista_filme if x.imdbid==request.get]
          
 
