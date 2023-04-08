@@ -12,6 +12,7 @@ variables:
 stages:
   - stage: Build
     displayName: Build and push image
+    dependsOn:
     jobs:
     - job: Build
       displayName: Build job
@@ -26,6 +27,7 @@ stages:
           tags: $(Build.BuildId)
   - stage: Deploy
     displayName: Deploy app
+    dependsOn: Build
     jobs:
     - job: Deploy
       displayName: Deploy app
