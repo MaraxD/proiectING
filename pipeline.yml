@@ -7,7 +7,9 @@ variables:
   - name: dockerfile
     value: '$(Build.SourcesDirectory)/proiectING/Dockerfile'
   - name: containerRegistry
-    value: 'testAcrMara'  
+    value: 'testAcrMara'
+  - name: endpoint
+    value: 'http://localhost:5000/films'    
 
 stages:
   - stage: Build
@@ -39,4 +41,14 @@ stages:
           command: login
           containerRegistry: ${{ variables.containerRegistry }}
       - script: docker run -it testacrmara.azurecr.io/proiecting:183
+  - stage: Test
+    displayName: Test connection
+    dependsOn: Deploy
+    jobs:
+    - job: Test
+      displayName: Test connection
+      steps:
+      - task: CmdLine@2
+        inputs:
+          script: 'curl ${{ variables.endpoint }}'
       
