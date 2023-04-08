@@ -38,5 +38,5 @@ stages:
         inputs: 
           command: login
           containerRegistry: ${{ variables.containerRegistry }}
-      - script: docker run testacrmara.azurecr.io/proiecting:183
+      - script: docker run -it testacrmara.azurecr.io/proiecting:183
       
