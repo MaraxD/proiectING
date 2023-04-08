@@ -8,6 +8,8 @@ variables:
     value: '$(Build.SourcesDirectory)/proiectING/Dockerfile'
   - name: containerRegistry
     value: 'testAcrMara'
+  - name: imageTag
+    value: 'latest'
   - name: endpoint
     value: 'http://localhost:5000/films'    
 
@@ -26,7 +28,7 @@ stages:
           repository: ${{ variables.repository }}
           dockerfile: ${{ variables.dockerfile }}
           containerRegistry: ${{ variables.containerRegistry }}
-          tags: $(Build.BuildId)
+          tags: ${{ variables.imageTag }}
   - stage: Deploy
     displayName: Deploy app
     dependsOn: Build
