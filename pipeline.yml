@@ -29,7 +29,7 @@ variables:
   - name: dockerfile
     value: '$(Build.SourcesDirectory)/proiectING/Dockerfile'
   - name: containerRegistry
-    value: 'test-svc-connection'  
+    value: 'testAcrMara'  
 
 stages:
   - stage: Build
