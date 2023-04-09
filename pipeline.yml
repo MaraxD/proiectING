@@ -6,7 +6,7 @@ pool:
 
 variables:
   imageName: 'Test'
-  dockerfilePath: './Dockerfile'
+  dockerfilePath: './proiectING/Dockerfile'
 
 stages:
 - stage: BuildandPushDockerImage
