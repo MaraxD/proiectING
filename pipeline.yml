@@ -20,7 +20,7 @@ stages:
         command: buildAndPush
         dockerfile: $(dockerfilePath)
         containerRegistry: testAcrMara
-        repository: INGproiect
+        repository: proiectING
         tags: latest
 
 - stage: CreateContainer
@@ -39,4 +39,4 @@ stages:
         azureSubscription: 'Azure subscription 1(39f28949-f9b1-4a5f-aeed-fc0f1de6c497)'
         scriptType: 'pscore'
         scriptLocation: 'inlineScript'
-        inlineScript: az container create -g resourceGroup-test --name test --image testacrmara.azurecr.io/INGproiect:latest --cpu 1 --memory 1 --registry-login-server testacrmara.azurecr.io --registry-username $(User) --registry-password $(Password) --ports 5000
+        inlineScript: az container create -g resourceGroup-test --name test --image testacrmara.azurecr.io/proiectING:latest --cpu 1 --memory 1 --registry-login-server testacrmara.azurecr.io --registry-username $(User) --registry-password $(Password) --ports 5000
