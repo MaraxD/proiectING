@@ -1,56 +1,42 @@
-trigger: none
+trigger:
+- main
 
-#TODO variabile hardcodate, trebuie folositi parametrii
+pool:
+  vmImage: 'ubuntu-latest'
+
 variables:
-  - name: repository
-    value: 'proiectING'
-  - name: dockerfile
-    value: '$(Build.SourcesDirectory)/proiectING/Dockerfile'
-  - name: containerRegistry
-    value: 'testAcrMara'
-  - name: imageTag
-    value: 'latest'
-  - name: endpoint
-    value: 'http://localhost:5000/films'    
+  imageName: 'Test'
+  dockerfilePath: './Dockerfile'
 
 stages:
-  - stage: Build
-    displayName: Build and push image
-    dependsOn:
-    jobs:
-    - job: Build
-      displayName: Build job
-      steps:
-      - task: Docker@2
-        displayName: Build and push image to container registry
-        inputs:
-          command: buildAndPush
-          repository: ${{ variables.repository }}
-          dockerfile: ${{ variables.dockerfile }}
-          containerRegistry: ${{ variables.containerRegistry }}
-          tags: ${{ variables.imageTag }}
-  - stage: Deploy
-    displayName: Deploy app
-    dependsOn: Build
-    jobs:
-    - job: Deploy
-      displayName: Deploy app
-      steps:
-      #TODO implement login part
-      - task: Docker@2
-        displayName: Login to ACR
-        inputs: 
-          command: login
-          containerRegistry: ${{ variables.containerRegistry }}
-      - script: docker run -it testacrmara.azurecr.io/proiecting:183
-  - stage: Test
-    displayName: Test connection
-    dependsOn: Deploy
-    jobs:
-    - job: Test
-      displayName: Test connection
-      steps:
-      - task: CmdLine@2
-        inputs:
-          script: 'curl ${{ variables.endpoint }}'
-      
+- stage: BuildandPushDockerImage
+  jobs:
+  - job: BuildandPush
+    displayName: BuildandPush Docker Image
+    steps:
+    - task: Docker@2
+      displayName: BuildandPush Docker image
+      inputs:
+        command: buildAndPush
+        dockerfile: $(dockerfilePath)
+        containerRegistry: test-svc-connection
+        repository: INGproiect
+        tags: latest
+
+- stage: CreateContainer
+  jobs:
+  - job: Create
+    displayName: Create Container
+    steps:
+    - task: AzureKeyVault@2
+      inputs:
+        azureSubscription: 'Azure subscription 1(39f28949-f9b1-4a5f-aeed-fc0f1de6c497)'
+        KeyVaultName: 'INGprojectVault'
+        SecretsFilter: '*'
+        RunAsPreJob: false
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'Azure subscription 1(39f28949-f9b1-4a5f-aeed-fc0f1de6c497)'
+        scriptType: 'pscore'
+        scriptLocation: 'inlineScript'
+        inlineScript: az container create -g resourceGroup-test --name test --image testacrmara.azurecr.io/INGproiect:latest --cpu 1 --memory 1 --registry-login-server testacrmara.azurecr.io --registry-username $(User) --registry-password $(Password) --ports 5000
