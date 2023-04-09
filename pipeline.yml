@@ -23,17 +23,17 @@ stages:
         repository: proiectING
         tags: latest
 
-# - stage: CreateContainer
-#   jobs:
-#   - job: Create
-#     displayName: Create Container
-#     steps:
-#     - task: AzureKeyVault@2
-#       inputs:
-#         azureSubscription: 'Azure subscription 1(39f28949-f9b1-4a5f-aeed-fc0f1de6c497)'
-#         KeyVaultName: 'INGprojectVault'
-#         SecretsFilter: '*'
-#         RunAsPreJob: false
+- stage: CreateContainer
+  jobs:
+  - job: Create
+    displayName: Create Container
+    steps:
+    - task: AzureKeyVault@2
+      inputs:
+        azureSubscription: 'Azure subscription 1(39f28949-f9b1-4a5f-aeed-fc0f1de6c497)'
+        KeyVaultName: 'INGprojectVault'
+        SecretsFilter: '*'
+        RunAsPreJob: false
 #     - task: AzureCLI@2
 #       inputs:
 #         azureSubscription: 'Azure subscription 1(39f28949-f9b1-4a5f-aeed-fc0f1de6c497)'
