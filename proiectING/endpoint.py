@@ -63,6 +63,7 @@ def addFilm():
             return "the film with id {id} does not exist :(".format(id=request.get_json())
         else:
             return lista_filme
+        
     elif request.method=='POST':
         newFilm=Film(request.get_json()["genre"],
                      request.get_json()["imdbrating"],
@@ -83,19 +84,28 @@ def addFilm():
             json.dump(lista_filme,f)
             
         return 'film added'
+    
     elif request.method=="PUT":
-        for i in lista_filme:
-            if request.get_json()['imdbid']==i['imdbid']:
-                i=request.get_json
+        i=0
+        while i<len(lista_filme):
+            if lista_filme[i]['imdbid']==request.get_json()['imdbid']:
+                lista_filme[i]=request.get_json()
+                #update the json
+                with open('filme.json','w') as f:
+                    json.dump(lista_filme,f)
+                return "film updated"
+            i+=1 
+        return "the film with id {id} does not exist :(".format(id=request.get_json()['imdbid'])
 
     elif request.method=='DELETE':
         for i in lista_filme:
             if request.get_json()==i['imdbid']:
                 lista_filme.remove(i)  
-        #update the json
-        with open('filme.json','w') as f:
-            json.dump(lista_filme,f)
-        return "film deleted"
+                #update the json
+                with open('filme.json','w') as f:
+                    json.dump(lista_filme,f)
+                return "film deleted"
+        return "the film with id {id} does not exist :(".format(id=request.get_json())
 
          
 
