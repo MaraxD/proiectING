@@ -40,3 +40,16 @@ elif cmdType=='test':
     args=parser.parse_args()
     command=subprocess.run(["curl","-v",args.endpoint])
     # print(command) 
+elif cmdType=='deployK':
+    parser.add_argument('deployK',type=str)
+    parser.add_argument('--namespace',type=str)
+    parser.add_argument('--deploymentFile',type=str)
+    parser.add_argument('--serviceName',type=str)
+    args=parser.parse_args()
+    command=subprocess.run(["minikube","start"])
+    if command.returncode==0:
+        #TODO de verificat ca namespace ul, deployment ul si service ul nu sun facute deja (ca le pune intr un namespace default)
+        command=subprocess.run(["kubectl","apply","-f",args.deploymentFile])
+
+        #problema aici: nu se deschide din prima, si abia dupa cv timp se duce pe alt port si merge?
+        command=subprocess.run(["minikube","service",args.serviceName,"-n","default"])
