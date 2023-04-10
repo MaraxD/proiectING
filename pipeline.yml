@@ -22,6 +22,11 @@ stages:
         containerRegistry: testAcrMara
         repository: proiectING
         tags: latest
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          curl -v flask-app.f5fggqh3dwfde9bs.westeurope.azurecontainer.io
 
 # - stage: CreateContainer
 #   jobs:
