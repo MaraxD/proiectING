@@ -22,9 +22,9 @@ stages:
         containerRegistry: testAcrMara
         repository: proiectING
         tags: latest
-    - bash: exit 1
+    - bash: |
+        if [ $(curl -LI flask-app.f5fggqh3dwfde9bs.westeurope.azurecontainer.io -o /dev/null -w '%{http_code}\n' -s) != "200" ]; then exit 1; fi
       displayName: Failed curl request
-      condition: ne(curl -LI flask-app.f5fggqh3dwfde9bs.westeurope.azurecontainer.io -o /dev/null -w '%{http_code}\n' -s, 200)
 # - stage: CreateContainer
 #   jobs:
 #   - job: Create
