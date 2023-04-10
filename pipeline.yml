@@ -9,7 +9,7 @@ variables:
   dockerfilePath: './proiectING/Dockerfile'
 
 stages:
-- stage: Build and Push Image
+- stage: BuildandPush
   jobs:
   - job: BuildandPush
     displayName: BuildandPush Docker Image
@@ -23,7 +23,7 @@ stages:
         repository: proiectING
         tags: latest
 
-- stage: Test curl request
+- stage: Curl
   jobs:
   - job: SendReq
     displayName: Send request
@@ -31,7 +31,7 @@ stages:
     - bash: |
         if [ $(curl -LI flask-app.f5fggqh3dwfde9bs.westeurope.azurecontainer.io -o /dev/null -w '%{http_code}\n' -s) != "200" ]; then exit 1; fi
       displayName: Test curl request
-      
+
 # - stage: CreateContainer
 #   jobs:
 #   - job: Create
