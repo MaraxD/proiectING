@@ -9,7 +9,7 @@ variables:
   dockerfilePath: './proiectING/Dockerfile'
 
 stages:
-- stage: BuildandPushDockerImage
+- stage: Build and Push Image
   jobs:
   - job: BuildandPush
     displayName: BuildandPush Docker Image
@@ -22,9 +22,16 @@ stages:
         containerRegistry: testAcrMara
         repository: proiectING
         tags: latest
+
+- stage: Test curl request
+  jobs:
+  - job: SendReq
+    displayName: Send request
+    steps:
     - bash: |
-        if [ $(curl -LI hai-merge.westeurope.azurecontainer.io -o /dev/null -w '%{http_code}\n' -s) != "200" ]; then exit 1; fi
+        if [ $(curl -LI flask-app.f5fggqh3dwfde9bs.westeurope.azurecontainer.io -o /dev/null -w '%{http_code}\n' -s) != "200" ]; then exit 1; fi
       displayName: Test curl request
+      
 # - stage: CreateContainer
 #   jobs:
 #   - job: Create
