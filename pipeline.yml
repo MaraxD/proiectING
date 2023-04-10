@@ -40,3 +40,4 @@ stages:
 #         scriptType: 'pscore'
 #         scriptLocation: 'inlineScript'
 #         inlineScript: az container create -g resource-test --name test --image testarcm.azurecr.io/proiectING:latest --cpu 1 --memory 1 --registry-login-server testacrmara.azurecr.io --registry-username $(User) --registry-password $(Password) --ports 5000
+
