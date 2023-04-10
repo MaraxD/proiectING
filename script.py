@@ -32,7 +32,7 @@ elif cmdType=='deploy':
     parser.add_argument('--imageTag',type=str)
     args=parser.parse_args()
 
-    command=subprocess.run(["docker","container","run","-p","5000:5000","-d","{imageName}:{imageTag}".format(imageName=args.imageName,imageTag=args.imageTag)])
+    command=subprocess.run(["docker","container","run","-p","80:80","-d","{imageName}:{imageTag}".format(imageName=args.imageName,imageTag=args.imageTag)])
     # print(command)
 elif cmdType=='test':
     parser.add_argument('test',type=str)
