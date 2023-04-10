@@ -19,24 +19,25 @@ stages:
       inputs:
         command: buildAndPush
         dockerfile: $(dockerfilePath)
-        containerRegistry: testARCm
+        containerRegistry: testAcrMara
         repository: proiectING
         tags: latest
 
-- stage: CreateContainer
-  jobs:
-  - job: Create
-    displayName: Create Container
-    steps:
-    - task: AzureKeyVault@2
-      inputs:
-        azureSubscription: 'Azure subscription 1 (a5577d92-76d9-4305-8401-ee12f06e173b)'
-        KeyVaultName: 'testKeyVault45'
-        SecretsFilter: '*'
-        RunAsPreJob: false
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'Azure subscription 1 (a5577d92-76d9-4305-8401-ee12f06e173b)'
-        scriptType: 'pscore'
-        scriptLocation: 'inlineScript'
-        inlineScript: az container create -g resource-test --name test --image testarcm.azurecr.io/proiectING:latest --cpu 1 --memory 1 --registry-login-server testacrmara.azurecr.io --registry-username $(User) --registry-password $(Password) --ports 5000
+# - stage: CreateContainer
+#   jobs:
+#   - job: Create
+#     displayName: Create Container
+#     steps:
+#     - task: AzureKeyVault@2
+#       inputs:
+#         azureSubscription: 'Azure subscription 1 (a5577d92-76d9-4305-8401-ee12f06e173b)'
+#         KeyVaultName: 'testKeyVault45'
+#         SecretsFilter: '*'
+#         RunAsPreJob: false
+#     - task: AzureCLI@2
+#       inputs:
+#         azureSubscription: 'Azure subscription 1 (a5577d92-76d9-4305-8401-ee12f06e173b)'
+#         scriptType: 'pscore'
+#         scriptLocation: 'inlineScript'
+#         inlineScript: az container create -g resource-test --name test --image testarcm.azurecr.io/proiectING:latest --cpu 1 --memory 1 --registry-login-server testacrmara.azurecr.io --registry-username $(User) --registry-password $(Password) --ports 5000
+
