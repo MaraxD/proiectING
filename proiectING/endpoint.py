@@ -1,7 +1,6 @@
 from flask import Flask
 from flask import request
 import requests
-from urllib.parse import urlparse, parse_qs
 import json
 import os.path
 
@@ -12,7 +11,7 @@ class Film:
     def __init__(self, genre, imdbrating, released, synopsis, title, type):
         self.genre=genre #a list
         self.imageurl=["a link"] #a list
-        self.imdbid='432kfh24' #TODO generating a random id
+        self.imdbid='432kfh24' #TODO generate a random id
         self.imdbrating=imdbrating
         self.released=released
         self.synopsis=synopsis
@@ -49,20 +48,19 @@ with open('filme.json') as f:
 #--app routes--
 @app.route('/')
 def films():
-    return data
+    return "asta nu e toata aplicatia noastra, don t panic"
 
-@app.route('/films', methods=["POST","GET","PUT","DELETE"]) # type: ignore
+@app.route('/films', methods=["POST","GET","PUT","DELETE"]) 
 def addFilm():
     if request.method=='GET':
-        if request.get_json()!=None:
+        if len(request.get_data())!=0:
             i=0
             while i<len(lista_filme):
                 if lista_filme[i]['imdbid']==request.get_json():
                     return lista_filme[i]
                 i+=1
             return "the film with id {id} does not exist :(".format(id=request.get_json())
-        else:
-            return lista_filme
+        return lista_filme
         
     elif request.method=='POST':
         newFilm=Film(request.get_json()["genre"],

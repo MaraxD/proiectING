@@ -32,7 +32,7 @@ elif cmdType=='deploy':
     parser.add_argument('--imageTag',type=str)
     args=parser.parse_args()
 
-    command=subprocess.run(["docker","container","run","-p","80:80","-d","{imageName}:{imageTag}".format(imageName=args.imageName,imageTag=args.imageTag)])
+    command=subprocess.run(["docker","container","run","-p","5000:5000","-d","{imageName}:{imageTag}".format(imageName=args.imageName,imageTag=args.imageTag)])
     # print(command)
 elif cmdType=='test':
     parser.add_argument('test',type=str)
@@ -42,14 +42,12 @@ elif cmdType=='test':
     # print(command) 
 elif cmdType=='deployK':
     parser.add_argument('deployK',type=str)
-    parser.add_argument('--namespace',type=str)
     parser.add_argument('--deploymentFile',type=str)
     parser.add_argument('--serviceName',type=str)
     args=parser.parse_args()
+
     command=subprocess.run(["minikube","start"])
     if command.returncode==0:
-        #TODO de verificat ca namespace ul, deployment ul si service ul nu sun facute deja (ca le pune intr un namespace default)
         command=subprocess.run(["kubectl","apply","-f",args.deploymentFile])
-
-        #problema aici: nu se deschide din prima, si abia dupa cv timp se duce pe alt port si merge?
+        #problema aici: nu se deschide din prima, isi da refresh si merge
         command=subprocess.run(["minikube","service",args.serviceName,"-n","default"])

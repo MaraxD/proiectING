@@ -19,7 +19,7 @@ spec:
       - name: flaskproiect
         image: maraxd/flask-app:latest
         ports:
-          - containerPort: 80
+          - containerPort: 5000
 ---
 
 apiVersion: v1
@@ -31,5 +31,5 @@ spec:
     app: flaskproiect
   ports:
   - protocol: TCP
-    port: 80
+    port: 5000
   type: LoadBalancer
