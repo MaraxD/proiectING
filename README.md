@@ -45,6 +45,10 @@ As a bonus, we've also wrote a command that creates a Kubernetes deployment with
 <br>
 `python3 script.py deployK --deploymentFile deployment.yaml --serviceName flask-service`
 
+#CI/CD on cloud
+Next up, we made use of the Azure Devops to create a pipeline that does the exact thing explained above. The pipeline also create a Container Instance in Azure for the app and a Kubernetes cluster (we could've done that directly from the GUI, but we chose to complicate our lives hihi)
+
+
 
 
 
