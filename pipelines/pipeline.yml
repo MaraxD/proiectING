@@ -1,0 +1,46 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  imageName: 'Test'
+  dockerfilePath: './Dockerfile'
+
+stages:
+- stage: BuildandPushDockerImage
+  jobs:
+  - job: BuildandPush
+    displayName: BuildandPush Docker Image
+    steps:
+    - task: Docker@2
+      displayName: BuildandPush Docker image
+      inputs:
+        command: buildAndPush
+        dockerfile: $(dockerfilePath)
+        containerRegistry: docker_asc_connection
+        repository: ING_Project
+        tags: latest 
+- stage: Container
+  jobs:
+  - job: DeployContainer
+    displayName: Deploy Container
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'Azure subscription 1(53ea4072-b0ee-4065-9580-2b703fad8a06)'
+        scriptType: 'bash'
+        scriptLocation: 'scriptPath'
+        scriptPath: './container_deploy.sh'
+- stage: AKS
+  jobs:
+  - job: DeployAKS
+    displayName: Deploy AKS cluster
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'Azure subscription 1(53ea4072-b0ee-4065-9580-2b703fad8a06)'
+        scriptType: 'bash'
+        scriptLocation: 'scriptPath'
+        scriptPath: './aks_deploy.sh'
