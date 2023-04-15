@@ -3,11 +3,11 @@ Our final project consists of a very minimalistic Flask app that makes a request
 The project is composed of three parts: Application development, CI/CD on local and CI/CD on cloud
 
 # Application development
-Our app makes a REST request to a public API and retrieves the response in a JSON format, in order for the changed data to remain persisted. Everytime the user starts the application, the script checks whether a json file exists with the data, and if not it creates it. We implemented this approach in order to cut down the times we made calls to the API.  
+Our app makes a REST request to a public API and retrieves the response in a JSON format, in order for the changed data to remain persisted. Everytime the user starts the application, the script checks whether a json file exists with the data, and if not it creates it. We implemented this approach in order to cut down the amount of calls made to the API.  
 
 <img width="710" alt="image" src="https://user-images.githubusercontent.com/76562302/231350387-49d0e178-3cdd-4c27-973a-c44ac9fcadbb.png">
 
-For the user to acces the data, we implemented an endpoint called films, in which it returns the data in a JSON format (no cute user interface i m afraid)
+For the user to acces the data, we implemented an endpoint called 'films', in which it returns the data in a JSON format (no cute user interface i'm afraid)
 
 <img width="503" alt="image" src="https://user-images.githubusercontent.com/76562302/231350617-ae5728f0-6abf-46b9-9234-54369f80c870.png">
 
@@ -47,7 +47,7 @@ As a bonus, we've also wrote a command that creates a Kubernetes deployment with
 `python3 script.py deployK --deploymentFile deployment.yaml --serviceName flask-service`
 
 # CI/CD on cloud
-Next up, we made use of the Azure Devops to create a pipeline that does the exact thing explained above. The pipeline also creates a Container Instance in Azure for the app and a Kubernetes cluster (we could've done that directly from the GUI, but we chose to complicate our lives hihi)
+Next up, we made use of the Azure Devops to create a pipeline that does the exact thing explained above. The pipeline also creates a container instance in Azure for the app and a Kubernetes cluster (we could've done that directly from the GUI, but we chose to complicate our lives hihi)
 
 
 <img width="240" alt="image" src="https://user-images.githubusercontent.com/76562302/232205199-718c8187-95eb-488f-89d9-74d3de7926d6.png" style="display:inline" >             <img width="244" alt="image" src="https://user-images.githubusercontent.com/76562302/232205049-7896c881-1db7-4148-99c9-2a6497f6fcb5.png" style="display:inline"> <img width="226" alt="image" src="https://user-images.githubusercontent.com/76562302/232205099-49a4c5cd-5646-4504-9079-c8c18800ff61.png" style="display:inline">
